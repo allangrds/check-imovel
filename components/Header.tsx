@@ -12,7 +12,7 @@ export function Header({ totalChecked, totalItems }: { totalChecked: number; tot
         <div className="flex items-baseline justify-between gap-3">
           <div>
             <h1 className="text-lg m-0">Check Imóvel</h1>
-            <p className="mt-[2px] mb-0 text-sm opacity-60">Um checklist para avaliar melhor antes de comprar seu imóvel.</p>
+            <p className="mt-[2px] mb-0 text-sm opacity-60">Checklist para comprar, manter e construir seu imóvel.</p>
           </div>
         </div>
         <div className="mt-2">
