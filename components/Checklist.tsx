@@ -8,6 +8,7 @@ import { MobileFab, MobileNavSheet } from "./MobileNav";
 import { Section } from "./Section";
 import { InfoSections } from "./InfoSections";
 import { ConfirmClearDialog } from "./ConfirmClearDialog";
+import { Footer } from "./Footer";
 
 const STORAGE_KEY = "checkimovel:v1";
 
@@ -23,7 +24,9 @@ export function Checklist({ sections }: { sections: ChecklistSectionData[] }) {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [confirmOpen, setConfirmOpen] = useState(false);
   const [activeSection, setActiveSection] = useState(sections[0]?.id ?? "geral");
+  const [copied, setCopied] = useState(false);
   const scrollScheduled = useRef(false);
+  const copyTimeout = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
 
   useEffect(() => {
     try {
@@ -112,6 +115,27 @@ export function Checklist({ sections }: { sections: ChecklistSectionData[] }) {
     setConfirmOpen(false);
   }, []);
 
+  useEffect(() => {
+    return () => clearTimeout(copyTimeout.current);
+  }, []);
+
+  const copyMissingItems = useCallback(() => {
+    const text = sections
+      .map((s) => {
+        const missing = s.items.filter((i) => !checked[i.id]);
+        if (missing.length === 0) return null;
+        return `${s.title}\n${missing.map((i) => `- ${i.title}`).join("\n")}`;
+      })
+      .filter((s): s is string => s !== null)
+      .join("\n\n");
+
+    navigator.clipboard.writeText(text).then(() => {
+      setCopied(true);
+      clearTimeout(copyTimeout.current);
+      copyTimeout.current = setTimeout(() => setCopied(false), 2000);
+    });
+  }, [sections, checked]);
+
   const totalItems = sections.reduce((sum, s) => sum + s.items.length, 0);
   const totalChecked = sections.reduce((sum, s) => sum + s.items.filter((i) => checked[i.id]).length, 0);
 
@@ -153,10 +177,20 @@ export function Checklist({ sections }: { sections: ChecklistSectionData[] }) {
             <button type="button" className="btn btn-secondary" onClick={() => setConfirmOpen(true)}>
               Limpar checklist
             </button>
+            <button
+              type="button"
+              className="btn btn-secondary"
+              onClick={copyMissingItems}
+              disabled={totalChecked === totalItems}
+            >
+              {copied ? "Copiado!" : "Copiar itens que faltam"}
+            </button>
             <span className="text-sm opacity-50">Seus dados ficam salvos apenas neste navegador.</span>
           </div>
         </main>
       </div>
+
+      <Footer />
 
       <MobileFab onClick={() => setMobileOpen(true)} />
 

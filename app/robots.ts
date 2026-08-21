@@ -6,6 +6,6 @@ export default function robots(): MetadataRoute.Robots {
       userAgent: "*",
       allow: "/",
     },
-    sitemap: "https://checkimovel.com.br/sitemap.xml",
+    sitemap: "https://check-imovel.vercel.app/sitemap.xml",
   };
 }

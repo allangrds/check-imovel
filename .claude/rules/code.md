@@ -1,0 +1,1 @@
+- After create/remove/update a file, garantee that lint and build are passing

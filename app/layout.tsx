@@ -14,7 +14,7 @@ const lora = Lora({
   weight: ["400", "600"],
 });
 
-const siteUrl = "https://checkimovel.com.br";
+const siteUrl = "https://check-imovel.vercel.app";
 const title = "Check Imóvel — checklist para avaliar antes de comprar";
 const description =
   "Checklist completo e gratuito para avaliar a compra de casas e apartamentos: vistoria, documentação, custos, financiamento, manutenção e reforma. Marque o que já verificou e o progresso fica salvo no navegador.";
@@ -23,13 +23,9 @@ export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title,
   description,
-  keywords: [
-    "checklist imóvel",
-    "comprar apartamento",
-    "comprar casa",
-    "vistoria de imóvel",
-    "checklist compra de imóvel",
-  ],
+  alternates: {
+    canonical: "/",
+  },
   openGraph: {
     title,
     description,
@@ -39,7 +35,7 @@ export const metadata: Metadata = {
     type: "website",
   },
   twitter: {
-    card: "summary",
+    card: "summary_large_image",
     title,
     description,
   },
