@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="_ds/classical-84f52634-0647-42d0-80a2-055ae0f5bffd/styles.css">
+  <script src="_ds/classical-84f52634-0647-42d0-80a2-055ae0f5bffd/_ds_bundle.js"></script>
+  <style id="ci-responsive">
+    html, body { margin: 0; }
+    .ci-sidebar { display: none; }
+    .ci-mobile-fab { display: flex; }
+    @media (min-width: 900px) {
+      .ci-sidebar { display: block; }
+      .ci-mobile-fab { display: none; }
+    }
+  </style>
+</helmet>
+<div style="background:var(--color-bg);color:var(--color-text);font-family:var(--font-body);min-height:100vh;">
+
+  <header style="position:sticky;top:0;z-index:20;background:var(--color-bg);border-bottom:1px solid var(--color-divider);">
+    <div style="max-width:1120px;margin:0 auto;padding:var(--space-3) var(--space-4);">
+      <div style="display:flex;align-items:baseline;justify-content:space-between;gap:var(--space-3);">
+        <div>
+          <h1 style="font-size:21px;margin:0;">Check Imóvel</h1>
+          <p style="margin:2px 0 0;font-size:12px;opacity:0.6;">Um checklist para avaliar melhor antes de comprar seu imóvel.</p>
+        </div>
+      </div>
+      <div style="margin-top:var(--space-2);">
+        <div style="display:flex;justify-content:space-between;align-items:baseline;font-size:12px;opacity:0.7;font-variant-numeric:tabular-nums;">
+          <span>{{ progressLabel }}</span>
+          <span>{{ percentLabel }}</span>
+        </div>
+        <div style="height:4px;border-radius:2px;background:var(--color-neutral-200);margin-top:4px;overflow:hidden;">
+          <div style="{{ progressBarStyle }}"></div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div style="max-width:1120px;margin:0 auto;padding:0 var(--space-4);display:flex;gap:var(--space-6);align-items:flex-start;">
+
+    <nav class="ci-sidebar" aria-label="Seções" style="width:210px;flex:none;position:sticky;top:96px;padding:var(--space-6) 0;">
+      <sc-for list="{{ navItems }}" as="navItem" hint-placeholder-count="10">
+        <a href="{{ navItem.href }}" onClick="{{ navItem.onClick }}" style="{{ navItem.linkStyle }}">
+          <span>{{ navItem.title }}</span>
+          <sc-if value="{{ navItem.showCount }}" hint-placeholder-val="{{ false }}">
+            <span style="opacity:0.5;font-variant-numeric:tabular-nums;font-size:11px;">{{ navItem.countLabel }}</span>
+          </sc-if>
+        </a>
+      </sc-for>
+    </nav>
+
+    <main style="flex:1;min-width:0;max-width:700px;padding:var(--space-6) 0 var(--space-8);">
+      <p style="font-size:14px;opacity:0.75;margin:0 0 var(--space-6);max-width:60ch;">Reúne, em ordem prática, os pontos que costumam fazer diferença na compra de uma casa ou apartamento — vistoria, documentação, custos e manutenção. Marque o que já verificou; o progresso fica salvo neste navegador.</p>
+
+      <sc-for list="{{ sectionsView }}" as="section" hint-placeholder-count="3">
+        <section id="{{ section.id }}" data-screen-label="{{ section.title }}" style="padding:var(--space-6) 0;border-bottom:1px solid var(--color-divider);">
+          <h2 style="font-size:24px;margin:0 0 4px;">{{ section.title }}</h2>
+          <p style="margin:0;font-size:13px;opacity:0.65;">{{ section.subtitle }}</p>
+          <p style="margin:2px 0 var(--space-3);font-size:11px;opacity:0.5;font-variant-numeric:tabular-nums;">{{ section.countLabel }}</p>
+
+          <sc-for list="{{ section.rows }}" as="row" hint-placeholder-count="5">
+            <sc-if value="{{ row.isGroup }}" hint-placeholder-val="{{ false }}">
+              <div style="margin:var(--space-4) 0 var(--space-1);font-size:11px;letter-spacing:0.08em;text-transform:uppercase;opacity:0.55;">{{ row.label }}</div>
+            </sc-if>
+            <sc-if value="{{ row.isItem }}" hint-placeholder-val="{{ true }}">
+              <label style="display:flex;gap:var(--space-3);align-items:flex-start;padding:var(--space-2) 0;cursor:pointer;">
+                <input type="checkbox" checked="{{ row.item.checked }}" onChange="{{ row.item.onToggle }}" style="position:absolute;opacity:0;width:0;height:0;" aria-label="{{ row.item.title }}" />
+                <span style="{{ row.item.boxStyle }} width:22px;height:22px;flex:none;border:1.5px solid;border-radius:var(--radius-sm);display:flex;align-items:center;justify-content:center;margin-top:1px;">
+                  <sc-if value="{{ row.item.checked }}" hint-placeholder-val="{{ false }}">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--color-bg)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>
+                  </sc-if>
+                </span>
+                <span style="flex:1;min-width:0;">
+                  <span style="display:flex;align-items:baseline;gap:var(--space-2);flex-wrap:wrap;">
+                    <span style="{{ row.item.titleStyle }} font-size:15px;line-height:1.35;">{{ row.item.title }}</span>
+                    <sc-if value="{{ row.item.severityTag }}" hint-placeholder-val="{{ false }}">
+                      <span class="{{ row.item.severityTag.cls }}">{{ row.item.severityTag.label }}</span>
+                    </sc-if>
+                  </span>
+                  <sc-if value="{{ row.item.description }}" hint-placeholder-val="{{ false }}">
+                    <p style="margin:2px 0 0;font-size:13px;opacity:0.68;line-height:1.4;">{{ row.item.description }}</p>
+                  </sc-if>
+                </span>
+              </label>
+            </sc-if>
+          </sc-for>
+
+          <div style="margin-top:var(--space-4);">
+            <button type="button" class="btn btn-ghost" onClick="{{ section.onToggleNote }}" style="font-size:12px;padding:4px 8px;">{{ section.noteToggleLabel }}</button>
+            <sc-if value="{{ section.noteOpen }}" hint-placeholder-val="{{ false }}">
+              <div class="field" style="margin-top:var(--space-2);">
+                <label for="note-{{ section.id }}">Observação</label>
+                <textarea class="input" id="note-{{ section.id }}" rows="2" value="{{ section.noteValue }}" onChange="{{ section.onNoteChange }}" placeholder="Ex.: quarto recebe sol só até 9h"></textarea>
+              </div>
+            </sc-if>
+          </div>
+        </section>
+      </sc-for>
+
+      <section id="reforma" data-screen-label="Reforma" style="padding:var(--space-6) 0;border-bottom:1px solid var(--color-divider);">
+        <h2 style="font-size:24px;margin:0 0 4px;">Reforma — o que dá para mudar</h2>
+        <p style="margin:0 0 var(--space-4);font-size:13px;opacity:0.65;max-width:58ch;">Ajuda a distinguir "esse imóvel está feio" de "esse imóvel tem características que nenhuma reforma simples resolve".</p>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:var(--space-3);">
+          <div class="card">
+            <div class="card-kicker">Fácil e barato</div>
+            <div class="card-title" style="font-size:15px;">Cosmético</div>
+            <p class="card-body">Pintura, luminárias, interruptores, torneiras, decoração, alguns revestimentos, móveis, portas internas.</p>
+          </div>
+          <div class="card">
+            <div class="card-kicker">Possível, mas caro</div>
+            <div class="card-title" style="font-size:15px;">Obra relevante</div>
+            <p class="card-body">Piso inteiro, cozinha, banheiro, marcenaria, elétrica, hidráulica, ar-condicionado, esquadrias, impermeabilização, aquecimento.</p>
+          </div>
+          <div class="card">
+            <div class="card-kicker">Difícil ou impossível</div>
+            <div class="card-title" style="font-size:15px;">Intrínseco ao imóvel</div>
+            <p class="card-body">Localização, orientação solar, andar, vista, barulho externo, vizinhos, pé-direito, estrutura, ventilação, tamanho real, vaga.</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="decisao" data-screen-label="Como decidir" style="padding:var(--space-6) 0;border-bottom:1px solid var(--color-divider);">
+        <h2 style="font-size:24px;margin:0 0 4px;">Como classificar o que encontrar</h2>
+        <p style="margin:0 0 var(--space-4);font-size:13px;opacity:0.65;max-width:58ch;">Na vistoria, classifique cada problema encontrado antes de decidir.</p>
+        <div style="display:grid;gap:var(--space-2);">
+          <div style="display:flex;gap:var(--space-3);padding:var(--space-2) 0;border-bottom:1px solid var(--color-divider);"><span class="tag tag-neutral" style="flex:none;">1. Cosmético</span><span style="font-size:13px;opacity:0.75;">Dá para ignorar ou negociar.</span></div>
+          <div style="display:flex;gap:var(--space-3);padding:var(--space-2) 0;border-bottom:1px solid var(--color-divider);"><span class="tag tag-outline" style="flex:none;">2. Manutenção</span><span style="font-size:13px;opacity:0.75;">Descubra o custo e desconte mentalmente do valor do imóvel.</span></div>
+          <div style="display:flex;gap:var(--space-3);padding:var(--space-2) 0;border-bottom:1px solid var(--color-divider);"><span class="tag tag-accent" style="flex:none;">3. Reforma grande</span><span style="font-size:13px;opacity:0.75;">Faça orçamento antes de comprar.</span></div>
+          <div style="display:flex;gap:var(--space-3);padding:var(--space-2) 0;"><span class="tag tag-accent" style="flex:none;background:var(--color-accent-800);color:var(--color-neutral-100);">4. Estrutural / documental</span><span style="font-size:13px;opacity:0.75;">Pode ser motivo para desistir da compra.</span></div>
+        </div>
+        <p style="margin:var(--space-4) 0 0;font-size:13px;font-style:italic;opacity:0.7;max-width:58ch;">Uma parede feia de R$ 2 mil pode fazer um imóvel excelente parecer ruim — e uma pintura linda de R$ 2 mil pode esconder R$ 80 mil em problemas.</p>
+      </section>
+
+      <div style="padding-top:var(--space-6);display:flex;align-items:center;gap:var(--space-3);flex-wrap:wrap;">
+        <button type="button" class="btn btn-secondary" onClick="{{ openConfirmClear }}">Limpar checklist</button>
+        <span style="font-size:12px;opacity:0.5;">Seus dados ficam salvos apenas neste navegador.</span>
+      </div>
+    </main>
+  </div>
+
+  <button type="button" class="ci-mobile-fab btn btn-primary" onClick="{{ toggleMobileNav }}" aria-label="Abrir seções" style="position:fixed;right:var(--space-4);bottom:var(--space-4);z-index:30;background:var(--color-bg);box-shadow:var(--shadow-md);">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h18M3 6h18M3 18h18"></path></svg>
+    Seções
+  </button>
+
+  <sc-if value="{{ mobileOpen }}" hint-placeholder-val="{{ false }}">
+    <div style="position:fixed;inset:0;z-index:40;background:color-mix(in srgb, var(--color-neutral-900) 50%, transparent);" onClick="{{ closeMobileNav }}">
+      <div style="position:absolute;left:0;right:0;bottom:0;max-height:75vh;overflow:auto;background:var(--color-surface);border-radius:var(--radius-lg) var(--radius-lg) 0 0;padding:var(--space-4);box-shadow:var(--shadow-lg);" onClick="{{ stopPropagation }}">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:var(--space-3);">
+          <h3 style="margin:0;font-size:17px;">Seções</h3>
+          <button type="button" class="btn btn-icon" onClick="{{ closeMobileNav }}" aria-label="Fechar">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"></path></svg>
+          </button>
+        </div>
+        <div style="display:grid;gap:2px;">
+          <sc-for list="{{ navItems }}" as="navItem" hint-placeholder-count="10">
+            <a href="{{ navItem.href }}" onClick="{{ navItem.onClickMobile }}" style="{{ navItem.mobileLinkStyle }} display:flex;justify-content:space-between;padding:var(--space-2) var(--space-1);">
+              <span>{{ navItem.title }}</span>
+              <sc-if value="{{ navItem.showCount }}" hint-placeholder-val="{{ false }}">
+                <span style="opacity:0.5;font-variant-numeric:tabular-nums;font-size:12px;">{{ navItem.countLabel }}</span>
+              </sc-if>
+            </a>
+          </sc-for>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ confirmOpen }}" hint-placeholder-val="{{ false }}">
+    <div class="dialog-backdrop" style="z-index:50;">
+      <div class="dialog">
+        <div class="dialog-title">Limpar checklist?</div>
+        <p class="dialog-body">Isso remove todas as marcações e observações salvas neste navegador. Essa ação não pode ser desfeita.</p>
+        <div class="dialog-actions">
+          <button type="button" class="btn btn-secondary" onClick="{{ closeConfirmClear }}">Cancelar</button>
+          <button type="button" class="btn btn-primary" onClick="{{ clearAll }}">Limpar tudo</button>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+const STORAGE_KEY = 'checkimovel:v1';
+
+class Component extends DCLogic {
+  state = {
+    sections: null,
+    checked: {},
+    notes: {},
+    noteOpenMap: {},
+    mobileOpen: false,
+    confirmOpen: false,
+    activeSection: 'geral',
+  };
+
+  componentDidMount() {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (raw) {
+        const parsed = JSON.parse(raw);
+        this.setState({ checked: parsed.checked || {}, notes: parsed.notes || {} });
+      }
+    } catch (e) {}
+
+    import('./checklist-data.js').then((m) => this.setState({ sections: m.sections }));
+
+    this._onScroll = () => {
+      if (this._scrollScheduled) return;
+      this._scrollScheduled = true;
+      requestAnimationFrame(() => {
+        this._scrollScheduled = false;
+        this.updateActiveSection();
+      });
+    };
+    window.addEventListener('scroll', this._onScroll, { passive: true });
+  }
+
+  componentWillUnmount() {
+    if (this._onScroll) window.removeEventListener('scroll', this._onScroll);
+  }
+
+  allIds() {
+    const ids = (this.state.sections || []).map((s) => s.id);
+    return ids.concat(['reforma', 'decisao']);
+  }
+
+  updateActiveSection() {
+    const offset = 130;
+    const ids = this.allIds();
+    let current = ids[0];
+    for (const id of ids) {
+      const el = document.getElementById(id);
+      if (!el) continue;
+      if (el.getBoundingClientRect().top - offset <= 0) current = id;
+    }
+    if (current !== this.state.activeSection) this.setState({ activeSection: current });
+  }
+
+  persist() {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify({ checked: this.state.checked, notes: this.state.notes }));
+    } catch (e) {}
+  }
+
+  toggleItem(itemId) {
+    const checked = { ...this.state.checked, [itemId]: !this.state.checked[itemId] };
+    this.setState({ checked }, () => this.persist());
+  }
+
+  updateNote(sectionId, value) {
+    const notes = { ...this.state.notes, [sectionId]: value };
+    this.setState({ notes }, () => this.persist());
+  }
+
+  toggleNoteOpen(sectionId) {
+    this.setState({ noteOpenMap: { ...this.state.noteOpenMap, [sectionId]: !this.state.noteOpenMap[sectionId] } });
+  }
+
+  scrollToSection(id) {
+    const el = document.getElementById(id);
+    if (!el) return;
+    const top = el.getBoundingClientRect().top + window.scrollY - 100;
+    window.scrollTo({ top, behavior: 'smooth' });
+  }
+
+  severityTag(sev) {
+    if (sev === 'critico') return { label: 'Crítico', cls: 'tag tag-accent' };
+    if (sev === 'importante') return { label: 'Importante', cls: 'tag tag-outline' };
+    if (sev === 'atencao') return { label: 'Atenção', cls: 'tag tag-neutral' };
+    return null;
+  }
+
+  renderVals() {
+    const checked = this.state.checked;
+    const rawSections = this.state.sections || [];
+
+    const sectionsView = rawSections.map((section) => {
+      const items = section.items.map((it) => ({
+        ...it,
+        checked: !!checked[it.id],
+        severityTag: this.severityTag(it.severity),
+        boxStyle: checked[it.id]
+          ? 'background:var(--color-accent);border-color:var(--color-accent);'
+          : 'background:transparent;border-color:var(--color-divider);',
+        titleStyle: checked[it.id] ? 'text-decoration:line-through;opacity:0.55;' : '',
+        onToggle: () => this.toggleItem(it.id),
+      }));
+
+      const rows = [];
+      let lastGroup = null;
+      items.forEach((item) => {
+        if (item.group && item.group !== lastGroup) {
+          rows.push({ isGroup: true, isItem: false, label: item.group });
+          lastGroup = item.group;
+        }
+        rows.push({ isGroup: false, isItem: true, item });
+      });
+
+      const total = items.length;
+      const checkedCount = items.filter((i) => i.checked).length;
+      const noteOpen = !!this.state.noteOpenMap[section.id];
+
+      return {
+        id: section.id,
+        title: section.title,
+        subtitle: section.subtitle,
+        rows,
+        total,
+        checkedCount,
+        countLabel: `${checkedCount} de ${total} verificados`,
+        noteOpen,
+        noteToggleLabel: noteOpen ? 'Ocultar observação' : 'Adicionar observação',
+        noteValue: this.state.notes[section.id] || '',
+        onToggleNote: () => this.toggleNoteOpen(section.id),
+        onNoteChange: (e) => this.updateNote(section.id, e.target.value),
+      };
+    });
+
+    const totalItems = sectionsView.reduce((sum, s) => sum + s.total, 0);
+    const totalChecked = sectionsView.reduce((sum, s) => sum + s.checkedCount, 0);
+    const percent = totalItems ? Math.round((totalChecked / totalItems) * 100) : 0;
+
+    const infoSections = [
+      { id: 'reforma', title: 'Reforma' },
+      { id: 'decisao', title: 'Como decidir' },
+    ];
+
+    const activeSection = this.state.activeSection;
+    const navSource = sectionsView
+      .map((s) => ({ id: s.id, title: s.title, showCount: true, countLabel: `${s.checkedCount}/${s.total}` }))
+      .concat(infoSections.map((s) => ({ id: s.id, title: s.title, showCount: false, countLabel: '' })));
+
+    const navItems = navSource.map((n) => {
+      const active = n.id === activeSection;
+      const baseStyle = 'display:flex;justify-content:space-between;gap:8px;padding:6px 4px;font-size:13.5px;text-decoration:none;border-left:2px solid ';
+      const linkStyle = active
+        ? baseStyle + 'var(--color-accent);color:var(--color-accent);padding-left:10px;'
+        : baseStyle + 'transparent;color:var(--color-text);padding-left:10px;';
+      const mobileLinkStyle = active ? 'color:var(--color-accent);' : 'color:var(--color-text);';
+      return {
+        ...n,
+        href: `#${n.id}`,
+        linkStyle,
+        mobileLinkStyle,
+        onClick: (e) => { e.preventDefault(); this.scrollToSection(n.id); },
+        onClickMobile: (e) => { e.preventDefault(); this.scrollToSection(n.id); this.setState({ mobileOpen: false }); },
+      };
+    });
+
+    return {
+      sectionsView,
+      navItems,
+      totalItems,
+      totalChecked,
+      progressLabel: `${totalChecked} de ${totalItems} itens verificados`,
+      percentLabel: `${percent}% concluído`,
+      progressBarStyle: `height:100%;background:var(--color-accent-500);width:${percent}%;transition:width .2s ease;`,
+      mobileOpen: this.state.mobileOpen,
+      toggleMobileNav: () => this.setState({ mobileOpen: !this.state.mobileOpen }),
+      closeMobileNav: () => this.setState({ mobileOpen: false }),
+      stopPropagation: (e) => e.stopPropagation(),
+      confirmOpen: this.state.confirmOpen,
+      openConfirmClear: () => this.setState({ confirmOpen: true }),
+      closeConfirmClear: () => this.setState({ confirmOpen: false }),
+      clearAll: () => {
+        try { localStorage.removeItem(STORAGE_KEY); } catch (e) {}
+        this.setState({ checked: {}, notes: {}, confirmOpen: false });
+      },
+    };
+  }
+}
+
+</script>
+</body>
+</html>

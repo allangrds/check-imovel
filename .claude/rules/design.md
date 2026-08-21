@@ -1,0 +1,1 @@
+- When ui create or change a visual element, think that project follow mobile first - and for mobile a app like ui - , so the first version of the element should be for mobile, and then you can add styles for bigger screens using media queries.
