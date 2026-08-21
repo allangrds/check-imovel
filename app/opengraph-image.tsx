@@ -1,6 +1,6 @@
 import { ImageResponse } from "next/og";
 
-export const alt = "Check Imóvel — checklist para avaliar antes de comprar";
+export const alt = "Check Imóvel — checklist para comprar, manter e construir";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -40,7 +40,7 @@ export default function Image() {
             maxWidth: 900,
           }}
         >
-          Checklist para avaliar antes de comprar
+          Checklist para comprar, manter e construir
         </div>
         <div
           style={{
@@ -51,7 +51,7 @@ export default function Image() {
             maxWidth: 900,
           }}
         >
-          Vistoria, documentação, custos e manutenção em um só lugar.
+          Compra, manutenção e construção de casa em um só lugar.
         </div>
       </div>
     ),

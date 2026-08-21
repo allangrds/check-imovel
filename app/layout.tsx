@@ -15,9 +15,9 @@ const lora = Lora({
 });
 
 const siteUrl = "https://check-imovel.vercel.app";
-const title = "Check Imóvel — checklist para avaliar antes de comprar";
+const title = "Check Imóvel — checklist para comprar, manter e construir";
 const description =
-  "Checklist completo e gratuito para avaliar a compra de casas e apartamentos: vistoria, documentação, custos, financiamento, manutenção e reforma. Marque o que já verificou e o progresso fica salvo no navegador.";
+  "Checklist completo e gratuito para comprar imóvel, manter um imóvel e construir uma casa: vistoria, documentação, custos, financiamento, manutenção, reforma e projeto/obra. Marque o que já verificou e o progresso fica salvo no navegador.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),

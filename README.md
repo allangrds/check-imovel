@@ -1,2 +1,2 @@
 # check-imovel
-Checklist completo para avaliar a compra de casas e apartamentos - vistoria, documentação, custos, manutenção e reformas
+Checklist completo para 3 momentos do imóvel: compra (vistoria, documentação, custos, financiamento), manutenção ao longo do tempo e construção de casa (terreno, projeto, instalações e obra)

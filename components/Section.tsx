@@ -55,20 +55,20 @@ export function Section({
         <button type="button" className="btn btn-ghost text-sm px-2 py-1" onClick={onToggleNote}>
           {noteOpen ? "Ocultar observação" : "Adicionar observação"}
         </button>
-        {noteOpen && (
-          <div className="field mt-2">
-            <label htmlFor={`note-${section.id}`}>Observação</label>
-            <textarea
-              className="input"
-              id={`note-${section.id}`}
-              rows={2}
-              value={noteValue}
-              onChange={(e) => onNoteChange(e.target.value)}
-              placeholder="Ex.: quarto recebe sol só até 9h"
-            />
-          </div>
-        )}
       </div>
+      {noteOpen && (
+        <div className="field mt-2">
+          <label htmlFor={`note-${section.id}`}>Observação</label>
+          <textarea
+            className="input"
+            id={`note-${section.id}`}
+            rows={2}
+            value={noteValue}
+            onChange={(e) => onNoteChange(e.target.value)}
+            placeholder="Ex.: quarto recebe sol só até 9h"
+          />
+        </div>
+      )}
     </section>
   );
 }
