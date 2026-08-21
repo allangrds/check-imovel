@@ -17,7 +17,19 @@ export function Sidebar({
   onNavigate: (id: string) => void;
 }) {
   return (
-    <nav className="ci-sidebar" aria-label="Seções" style={{ width: 210, flex: "none", position: "sticky", top: 96, padding: "27.6px 0" }}>
+    <nav
+      className="ci-sidebar"
+      aria-label="Seções"
+      style={{
+        width: 210,
+        flex: "none",
+        position: "sticky",
+        top: 96,
+        padding: "27.6px 0",
+        maxHeight: "calc(100vh - 96px)",
+        overflowY: "auto",
+      }}
+    >
       {navItems.map((navItem) => {
         const active = navItem.id === activeSection;
         return (
