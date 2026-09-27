@@ -1,0 +1,10 @@
+{
+  "redirects": [
+    {
+      "source": "/:path*",
+      "has": [{ "type": "host", "value": "check-imovel.vercel.app" }],
+      "destination": "https://www.checkimovel.allanramos.com.br/:path*",
+      "permanent": true
+    }
+  ]
+}
